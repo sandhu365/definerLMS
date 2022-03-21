@@ -8,14 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPageWidget extends StatefulWidget {
-  const LoginPageWidget({Key key}) : super(key: key);
+class SignUpWidget extends StatefulWidget {
+  const SignUpWidget({Key key}) : super(key: key);
 
   @override
-  _LoginPageWidgetState createState() => _LoginPageWidgetState();
+  _SignUpWidgetState createState() => _SignUpWidgetState();
 }
 
-class _LoginPageWidgetState extends State<LoginPageWidget> {
+class _SignUpWidgetState extends State<SignUpWidget> {
+  TextEditingController confPasswordController;
+  bool confPasswordVisibility;
   TextEditingController emailAddressController;
   TextEditingController passwordController;
   bool passwordVisibility;
@@ -24,6 +26,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   void initState() {
     super.initState();
+    confPasswordController = TextEditingController();
+    confPasswordVisibility = false;
     emailAddressController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
@@ -198,6 +202,76 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                   ),
                 ),
                 Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: confPasswordController,
+                          obscureText: !confPasswordVisibility,
+                          decoration: InputDecoration(
+                            labelText: 'Confirm Password',
+                            labelStyle:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                            hintText: 'Enter your email here...',
+                            hintStyle:
+                                FlutterFlowTheme.of(context).bodyText1.override(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0xFFDBE2E7),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0xFFDBE2E7),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding:
+                                EdgeInsetsDirectional.fromSTEB(16, 24, 24, 24),
+                            suffixIcon: InkWell(
+                              onTap: () => setState(
+                                () => confPasswordVisibility =
+                                    !confPasswordVisibility,
+                              ),
+                              child: Icon(
+                                confPasswordVisibility
+                                    ? Icons.visibility_outlined
+                                    : Icons.visibility_off_outlined,
+                                color: Color(0xFF95A1AC),
+                                size: 22,
+                              ),
+                            ),
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyText1.override(
+                                    fontFamily: 'Lexend Deca',
+                                    color: Color(0xFF2B343A),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
@@ -205,7 +279,19 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     children: [
                       FFButtonWidget(
                         onPressed: () async {
-                          final user = await signInWithEmail(
+                          if (passwordController.text !=
+                              confPasswordController.text) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Passwords don\'t match!',
+                                ),
+                              ),
+                            );
+                            return;
+                          }
+
+                          final user = await createAccountWithEmail(
                             context,
                             emailAddressController.text,
                             passwordController.text,
@@ -354,8 +440,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ),
                       ),
                       FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignUpWidget(),
+                            ),
+                          );
                         },
                         text: 'Register',
                         options: FFButtonOptions(

@@ -1,19 +1,18 @@
-import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../login_page/login_page_widget.dart';
+import '../flutter_flow/flutter_flow_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePageWidget extends StatefulWidget {
-  const HomePageWidget({Key key}) : super(key: key);
+class CoursePageWidget extends StatefulWidget {
+  const CoursePageWidget({Key key}) : super(key: key);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _CoursePageWidgetState createState() => _CoursePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _CoursePageWidgetState extends State<CoursePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -24,7 +23,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Home Page',
+          'Course ',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -38,19 +37,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             borderWidth: 1,
             buttonSize: 60,
             icon: Icon(
-              Icons.power_settings_new_sharp,
+              Icons.power_settings_new_outlined,
               color: Colors.white,
               size: 30,
             ),
-            onPressed: () async {
-              await signOut();
-              await Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginPageWidget(),
-                ),
-                (r) => false,
-              );
+            onPressed: () {
+              print('IconButton pressed ...');
             },
           ),
         ],
@@ -63,9 +55,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [],
+            children: [
+              FlutterFlowVideoPlayer(
+                path:
+                    'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                videoType: VideoType.network,
+                autoPlay: false,
+                looping: true,
+                showControls: true,
+                allowFullScreen: true,
+                allowPlaybackSpeedMenu: false,
+              ),
+            ],
           ),
         ),
       ),
