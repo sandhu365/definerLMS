@@ -10,7 +10,6 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:definer_lms/login_page/login_page_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'home_page/home_page_widget.dart';
 import 'course_page/course_page_widget.dart';
 import 'profile/profile_widget.dart';
@@ -128,89 +127,39 @@ class _NavBarPageState extends State<NavBarPage> {
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
     return Scaffold(
       body: tabs[_currentPage],
-      extendBody: true,
-      bottomNavigationBar: FloatingNavbar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
         backgroundColor: Colors.white,
-        selectedItemColor: Color(0x00000000),
-        unselectedItemColor: Color(0x00000000),
-        selectedBackgroundColor: Color(0x00000000),
-        borderRadius: 8,
-        itemBorderRadius: 8,
-        margin: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        width: double.infinity,
-        elevation: 0,
-        items: [
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.home_outlined,
-                  color:
-                      currentIndex == 0 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24,
-                ),
-                Text(
-                  'Home',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 0
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+        selectedItemColor: FlutterFlowTheme.of(context).primaryColor,
+        unselectedItemColor: Color(0x8A000000),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24,
             ),
+            label: 'Home',
+            tooltip: '',
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.cast_for_education_sharp,
-                  color:
-                      currentIndex == 1 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24,
-                ),
-                Text(
-                  'Course',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 1
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.cast_for_education_sharp,
+              size: 24,
             ),
+            label: 'Course',
+            tooltip: '',
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.person,
-                  color:
-                      currentIndex == 2 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24,
-                ),
-                Text(
-                  'Profile',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 2
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              size: 24,
             ),
+            label: 'Profile',
+            tooltip: '',
           )
         ],
       ),
